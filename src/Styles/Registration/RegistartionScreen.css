@@ -41,7 +41,7 @@
 
 .reg-input-group .icon {
     position: absolute;
-    right: 1rem;
+    /* left: 0.2rem; */
     padding-top: 10px;
     font-size: 1.2rem;
     color: #394148;
@@ -60,7 +60,7 @@
 }
 .reg-input-group .icon2 {
     position: absolute;
-    left: 1rem;
+    /* left: 1rem; */
     padding-bottom: 20px;
     font-size: 1.2rem;
     color: #394148;
@@ -73,7 +73,6 @@
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    direction: rtl;
     background-color: #f4f7fb;
     border-radius: 20px;
 }
@@ -89,10 +88,7 @@
     color: #393D48;
     font-size: 15px;
     font-weight: 500;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
+    border-radius: 20px;
 }
 
 .phone-input-group {
@@ -112,18 +108,18 @@
     background: #f4f7fb;
     border: none;
     color: #393D48;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
   
 .phone-input {
-    width: 65%;
-    padding: 0.75rem;
+    width: 80%;
+    /* padding: 0.75rem; */
     border: 1px solid #ccc;
     border-radius: 8px;
-    text-align: right;
+    text-align: left;
 }
 .phone-input:focus {
     border: none;
@@ -145,7 +141,7 @@
 
 .reg-2-input-group .icon {
     position: absolute;
-    right: 1rem;
+    left: 1rem;
     padding-top: 10px;
     font-size: 1.2rem;
     color: #394148;

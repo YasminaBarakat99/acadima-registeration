@@ -42,9 +42,9 @@ function RegistrationScreen() {
   const [error, setError] = useState(null);
   const [countryOptions, setCountryOptions] = useState([]);
 
-  const [type, setType] = useState("programs");
-  const [webinarId, setWebinarId] = useState("programs");
-  const [bundleId, setBundleId] = useState("courses");
+  const [type] = useState("programs");
+  const [webinarId] = useState("programs");
+  const [bundleId] = useState("courses");
 
   const navigate = useNavigate();
 
@@ -59,9 +59,8 @@ function RegistrationScreen() {
             "ngrok-skip-browser-warning": true,
           },
         });
-        const data = await response.json();
 
-        // Transform the API response into the required format
+        const data = await response.json();
         const formattedOptions = Object.entries(data).map(([name, code]) => ({
           name,
           code,
@@ -82,13 +81,11 @@ function RegistrationScreen() {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
-  // Validate that name only contains English letters and spaces
+  // Validate name (English letters only)
   const handleNameChange = (e) => {
     const value = e.target.value;
-    const englishRegex = /^[A-Za-z\s]*$/;
-
-    if (!englishRegex.test(value)) {
-      setError("الرجاء إدخال الاسم باللغة الإنجليزية فقط");
+    if (!/^[A-Za-z\s]*$/.test(value)) {
+      setError("Please enter your name in English only.");
       return;
     }
     setError(null);
@@ -101,133 +98,60 @@ function RegistrationScreen() {
     setLoading(true);
     setError(null);
 
-  //   const registrationData = {
-  //     full_name,
-  //     email,
-  //     email_confirmation: email, // Default: same as email
-  //     password,
-  //     password_confirmation: password, // Default: same as password
-  //     mobile: countryPrefix + mobile,
-  //     country_code: countryPrefix || "EG", // Default: "EG"
-  //     type,
-  //     webinar_id: webinarId,
-  //     bundle_id: bundleId,
-  //   };
+    const registrationData = {
+      full_name,
+      email,
+      email_confirmation: email,
+      password,
+      password_confirmation: password,
+      mobile: `${countryPrefix}${mobile}`,
+      country_code: countryPrefix,
+      type,
+      webinar_id: webinarId,
+      bundle_id: bundleId,
+    };
 
-  //   console.log(registrationData);
-    
+    try {
+      const response = await axios.post(
+        "https://platform.acadima.tech/auth/register",
+        registrationData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Response:", response.data.data.errors);
 
-  //   try {
-  //     // const response = await axios.post(`${apiUrl}/auth/register`, registrationData, {
-  //     //   // method: "POST",
-  //     //   // headers: {
-  //     //     // "x-api-key": "1234"
-
-  //     //   // },
-  //     //   // body: JSON.stringify(registrationData),
-  //     // });
-  //     const response = await axios.post("https://platform.acadima.tech/auth/register", 
-  //       {
-  //         "full_name" : "hrasd77aaa",
-  //         "email": "h7733@gmail.com",
-  //         "email_confirmation": "h7733@gmail.com",
-  //         "password": "password",
-  //         "type": "programs",
-  //         "password_confirmation": "password",
-  //         "mobile"  : "4457127612948",
-  //         "country_code": "EG",
-  //         "webinar_id": "programs",
-  //         "bundle_id": "courses"
-  //     },{
-  //       headers: {
-  //         "Access-Control-Allow-Origin" : "*"
-  //       }
-  //     }
-  //   );
-  //     console.log(response);
-      
-  //     // const data = await response.json();
-  //     const data = response.data;
-
-
-  //     if (!response.ok) {
-  //       if (data.errors) {
-  //         const errorMessages = [];
-  //         if (data.errors.email) errorMessages.push(`${data.errors.email[0]}`);
-  //         if (data.errors.mobile)
-  //           errorMessages.push(`${data.errors.mobile[0]}`);
-  //         if (data.errors.password)
-  //           errorMessages.push(`${data.errors.password[0]}`);
-  //         setError(errorMessages.join(" و "));
-  //       } else {
-  //         setError("Failed to register. Please try again.");
-  //       }
-  //       return;
-  //     }
-
-  //     const token = data.data.token;
-  //     localStorage.setItem("token", token);
-
-  //     // await refreshUserData();
-  //     // const previousRoute = getPreviousRoute();
-  //     // if (previousRoute) {
-  //     //   navigate(previousRoute);
-  //     // } else {
-  //     //   navigate("/admission"); // Default fallback route
-  //     // }
-  //     console.log(data);
-  //   } catch (err) {
-  //     console.log(err);
-
-  //     setError("An unknown error occurred.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-
-  const data = {
-    full_name: "hrasd77 aaa",
-    email: "h33@gmail.com",
-    email_confirmation: "h33@gmail.com",
-    password: "password",
-    type: "programs",
-    password_confirmation: "password",
-    mobile: "4457127656948",
-    country_code: "EG",
-    webinar_id: "programs",
-    bundle_id: "courses"
-};
-
-fetch('https://platform.acadima.tech/auth/register', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',  // Ensure server understands we want JSON in response
-    },
-    body: JSON.stringify(data),  // Convert the JavaScript object to a JSON string
-    // Optional: This may help in some cases with CORS requests
-    credentials: 'same-origin',  // Can be 'include' if your request needs cookies or authentication
-})
-  .then(response => {
-    if (!response.ok) {
-        throw new Error('Network response was not ok ' + response.statusText);
+      if (response.data.success === false) {
+        if (response.data.data.errors) {
+          const errorMessages = [];
+          if (response.data.data.errors.email) 
+            errorMessages.push(`${response.data.data.errors.email[0]}`);
+          if (response.data.data.errors.mobile)
+            errorMessages.push(`${response.data.data.errors.mobile[0]}`);
+          if (response.data.data.errors.password)
+            errorMessages.push(`${response.data.data.errors.password[0]}`);
+          setError(errorMessages.join(" و "));
+        } else {
+          setError("Failed to register. Please try again.");
+        }
+        return;
+      }
+    } catch (error) {
+      console.error("There was an error!", error.response?.data || error.message);
+      setError(error.response?.data?.message || "Registration failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
-    return response.json();  // Parse the JSON response
-  })
-  .then(data => {
-    console.log('Success:', data);  // Log the success response
-  })
-  .catch((error) => {
-    console.error('Error:', error);  // Log any error
-  });
- 
-
   };
+
 
   return (
     <div className="mainContainer">
       <div className="reg-formContainer">
         <div className="form-one">
-          <a className="login-logo-container" href="https://anasacademy.uk">
+          <a className="login-logo-container" href="https://acadima.tech">
             <img
               src={anasAcadlogo}
               alt="anasAcadlogo"
@@ -237,26 +161,27 @@ fetch('https://platform.acadima.tech/auth/register', {
         </div>
 
         <div className="form-two">
-          <span className="form-title">إنشاء حساب</span>
+          <span className="form-title">Registeration</span>
         </div>
 
         <form className="form-three" onSubmit={handleSubmit}>
           <div className="input-group">
-            <img src={user} alt="user" className="icon" />
             <input
               type="text"
-              placeholder="الاسم باللغة الإنجليزية"
+              placeholder="Full Name"
               required
               value={full_name}
               onChange={handleNameChange}
             />
+            <img src={user} alt="user" className="icon" />
+
           </div>
 
           <div className="input-group">
             <img src={mail} alt="mail" className="icon" />
             <input
               type="email"
-              placeholder="البريد الإلكتروني"
+              placeholder="Email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -283,7 +208,7 @@ fetch('https://platform.acadima.tech/auth/register', {
                   type="tel"
                   required
                   className="phone-input"
-                  placeholder="رقم الجوال"
+                  placeholder="Mobile Phone"
                   value={mobile}
                   onChange={(e) => setMobile(e.target.value)}
                 />
@@ -295,7 +220,7 @@ fetch('https://platform.acadima.tech/auth/register', {
             <img src={lock2} alt="lock2" className="icon" />
             <input
               type={isPasswordVisible ? "text" : "password"}
-              placeholder="كلمة المرور"
+              placeholder="Password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -317,7 +242,7 @@ fetch('https://platform.acadima.tech/auth/register', {
               style={{ cursor: "pointer" }}
             >
               <span className="login-button-text">
-                {loading ? "جاري الإرسال..." : "إنشاء حساب"}
+                Register
               </span>
             </button>
           </div>
@@ -347,10 +272,10 @@ fetch('https://platform.acadima.tech/auth/register', {
             className="register-link"
             style={{ color: "white", cursor: "pointer" }}
           >
-            لديك حساب بالفعل؟
+              Already have an account?
             {"   "}
             <a href="#" onClick={() => navigate("/login")}>
-              تسجيل دخول
+              Login
             </a>
           </p>
         </div>

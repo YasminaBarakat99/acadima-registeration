@@ -1,5 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 import "../Styles/Registration/LoginScreen.css";
 // import { UserContext } from "../Context/UserContext";
 import { getPreviousRoute } from "../Context/RouteHistory";
@@ -85,37 +87,23 @@ function LoginScreen() {
     const loginData = { email, password };
 
     try {
-      const response = await fetch(apiUrl + "/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": "1234",
-        },
-        body: JSON.stringify(loginData),
-      });
+      const response = await axios.post(
+        "https://platform.acadima.tech/auth/login",
+        loginData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Response:", response);
 
-      const data = await response.json();
-      if (!response.ok || data.success === false) {
-        setError("البريد الإلكتروني أو كلمة المرور غير صحيحة");
+
+      if (response.data.success === false) {
+        setError("Wrong Email or Password");
         return;
       }
 
-      const token = data.data.token;
-      localStorage.setItem("token", token);
-
-      // Refresh user data
-      // await refreshUserData();
-
-      // Navigate based on role or previous route
-      if (previousRoute) {        
-        navigate(previousRoute);
-      } else if (data?.data?.user?.role === "user") {
-        navigate("/");
-      } else if (data?.data?.user?.user_code) {
-        navigate("/finances/program");
-      } else {
-        navigate("/admission");
-      }
     } catch (err) {
       setError("حدث خطأ غير متوقع");
     } finally {
@@ -225,12 +213,12 @@ function LoginScreen() {
     <div className="mainContainer">
       <div className="formContainer">
         <div className="form-one">
-          <a className="login-logo-container" href="https://anasacademy.uk">
+          <a className="login-logo-container" href="https://acadima.tech">
             <img src={anasAcadlogo} alt="anasAcadlogo" className="anasAcadlogo" />
           </a>
         </div>
         <div className="form-two">
-          <span className="form-title">تسجيل دخول</span>
+          <span className="form-title">Login</span>
         </div>
 
         <form className="form-three" onSubmit={handleSubmit}>
@@ -238,7 +226,7 @@ function LoginScreen() {
             <input
               value={email}
               type="email"
-              placeholder="البريد الإلكتروني"
+              placeholder="Email"
               required
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -247,13 +235,7 @@ function LoginScreen() {
 
           <div className="input-group">
             <img src={lock} alt="lock" className="icon" />
-            <input
-              type={isPasswordVisible ? "text" : "password"}
-              placeholder="كلمة المرور"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            
             <span className="icon2" onClick={togglePasswordVisibility}>
               {isPasswordVisible ? (
                 <img src={hide} alt="hide" className="icon2" />
@@ -261,15 +243,22 @@ function LoginScreen() {
                 <img src={show} alt="show" className="icon2" />
               )}
             </span>
+            <input
+              type={isPasswordVisible ? "text" : "password"}
+              placeholder="Password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
 
           <a className="forgot-password" onClick={() => setShowForgotPasswordPopup(true)} style={{cursor: "pointer" }}>
-            نسيت كلمة المرور؟
+            Forgot Password?
           </a>
 
           <div className="buttons-container">
             <button className="login-button" type="submit" disabled={loading} style={{cursor: "pointer" }}>
-              <span className="login-button-text">تسجيل دخول</span>
+              <span className="login-button-text">Login</span>
             </button>
           </div>
         </form>
@@ -295,9 +284,9 @@ function LoginScreen() {
             </a>
           </div> */}
           <p className="register-link">
-            <span style={{ color: "white"}}>ليس لديك حساب؟ </span>{" "}
+            <span style={{ color: "white"}}>Don't have an account?</span>{" "}
             <a onClick={() => navigate("/register")} style={{cursor: "pointer" }}>
-              إنشاء حساب
+              Register 
             </a>
           </p>
         </div>
