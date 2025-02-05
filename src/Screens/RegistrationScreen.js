@@ -9,13 +9,13 @@ import { getPreviousRoute } from "../Context/RouteHistory";
 
 import { apiUrl, apiUrl2 } from "../API";
 
-import anasAcadlogo from "../Images/AcadimaLogo.png";
-import user from "../Images/Registration/User_01.svg";
-import lock2 from "../Images/Registration/Lock.svg";
-import mail from "../Images/Registration/Mail.svg";
-import hide from "../Images/Registration/Hide.svg";
-import show from "../Images/Registration/Show.svg";
-import phone from "../Images/Registration/Mobile.svg";
+// import anasAcadlogo from "../../public/Images/AcadimaLogo.png";
+// import user from "../../public/Images/Registration/User_01.svg";
+// import lock2 from "../../public/Images/Registration/Lock.svg";
+// import mail from "../../public/Images/Registration/Mail.svg";
+// import hide from "../../public/Images/Registration/Hide.svg";
+// import show from "../../public/Images/Registration/Show.svg";
+// import phone from "../../public/Images/Registration/Mobile.svg";
 
 // import appleLogo from "../Images/Registration/apple.svg";
 // import googleLogo from "../Images/Registration/google.svg";
@@ -164,7 +164,7 @@ function RegistrationScreen() {
         <div className="form-one">
           <a className="login-logo-container" href="https://acadima.tech">
             <img
-              src={anasAcadlogo}
+              src="/Images/AcadimaLogo.png"
               alt="anasAcadlogo"
               className="anasAcadlogo"
             />
@@ -184,12 +184,12 @@ function RegistrationScreen() {
               value={full_name}
               onChange={handleNameChange}
             />
-            <img src={user} alt="user" className="icon" />
+            <img src="/Images/Registration/User_01.svg" alt="user" className="icon" />
 
           </div>
 
           <div className="input-group">
-            <img src={mail} alt="mail" className="icon" />
+            <img src="/Images/Registration/Mail.svg" alt="mail" className="icon" />
             <input
               type="email"
               placeholder="Email"
@@ -214,7 +214,7 @@ function RegistrationScreen() {
               </select>
 
               <div className="input-container">
-                <img src={phone} alt="phone" className="icon" />
+                <img src="/Images/Registration/Mobile.svg" alt="phone" className="icon" />
                 <input
                   type="tel"
                   required
@@ -228,7 +228,7 @@ function RegistrationScreen() {
           </div>
 
           <div className="input-group">
-            <img src={lock2} alt="lock2" className="icon" />
+            <img src="/Images/Registration/Lock.svg" alt="lock2" className="icon" />
             <input
               type={isPasswordVisible ? "text" : "password"}
               placeholder="Password"
@@ -238,9 +238,9 @@ function RegistrationScreen() {
             />
             <span className="icon2" onClick={togglePasswordVisibility}>
               {isPasswordVisible ? (
-                <img src={hide} alt="hide" className="icon2" />
+                <img src="/Images/Registration/Hide.svg" alt="hide" className="icon2" />
               ) : (
-                <img src={show} alt="show" className="icon2" />
+                <img src="/Images/Registration/Show.svg" alt="show" className="icon2" />
               )}
             </span>
           </div>

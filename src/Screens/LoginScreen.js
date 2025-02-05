@@ -7,11 +7,11 @@ import "../Styles/Registration/LoginScreen.css";
 import { getPreviousRoute } from "../Context/RouteHistory";
 import { apiUrl } from "../API";
 
-import anasAcadlogo from "../Images/AcadimaLogo.png";
-import lock from "../Images/Registration/Lock.svg";
-import mail from "../Images/Registration/Mail.svg";
-import hide from "../Images/Registration/Hide.svg";
-import show from "../Images/Registration/Show.svg";
+// anasAcadlogo from "../../public/Images/AcadimaLogo.png";
+// import lock from "../../public/Images/Registration/Lock.svg";
+// import mail from "../../public/Images/Registration/Mail.svg";
+// import hide from "../../public/Images/Registration/Hide.svg";
+// import show from "../../public/Images/Registration/Show.svg";
 
 // import appleLogo from "../Images/Registration/apple.svg";
 // import googleLogo from "../Images/Registration/google.svg";
@@ -214,7 +214,7 @@ function LoginScreen() {
       <div className="formContainer">
         <div className="form-one">
           <a className="login-logo-container" href="https://acadima.tech">
-            <img src={anasAcadlogo} alt="anasAcadlogo" className="anasAcadlogo" />
+            <img  src="/Images/AcadimaLogo.png" alt="anasAcadlogo" className="anasAcadlogo" />
           </a>
         </div>
         <div className="form-two">
@@ -230,17 +230,17 @@ function LoginScreen() {
               required
               onChange={(e) => setEmail(e.target.value)}
             />
-            <img src={mail} alt="mail" className="icon" />
+            <img src="/Images/Registration/Mail.svg" alt="mail" className="icon" />
           </div>
 
           <div className="input-group">
-            <img src={lock} alt="lock" className="icon" />
+            <img src="/Images/Registration/Lock.svg" alt="lock" className="icon" />
             
             <span className="icon2" onClick={togglePasswordVisibility}>
               {isPasswordVisible ? (
-                <img src={hide} alt="hide" className="icon2" />
+                <img src="/Images/Registration/Hide.svg" alt="hide" className="icon2" />
               ) : (
-                <img src={show} alt="show" className="icon2" />
+                <img src="/Images/Registration/Show.svg" alt="show" className="icon2" />
               )}
             </span>
             <input
