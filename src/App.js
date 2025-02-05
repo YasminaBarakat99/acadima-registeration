@@ -10,9 +10,9 @@ function App() {
       <div className="App">
         <Routes>
           {/* Redirect from '/' to '/login' */}
-          <Route path="/" element={<Navigate to="/login" replace />} />
-          <Route path="/login" element={<LoginScreen />} />
-          <Route path="/register" element={<RegistrationScreen />} />
+          <Route path="/" element={<Navigate to="/react/login" replace />} />
+          <Route path="/react/login" element={<LoginScreen />} />
+          <Route path="/react/register" element={<RegistrationScreen />} />
         </Routes>
       </div>
     </Router>
