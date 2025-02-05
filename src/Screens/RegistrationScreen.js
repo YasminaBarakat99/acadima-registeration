@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 import "../Styles/Registration/RegistartionScreen.css";
@@ -45,6 +45,13 @@ function RegistrationScreen() {
   const [type] = useState("programs");
   const [webinarId] = useState("programs");
   const [bundleId] = useState("courses");
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const bundle_id = queryParams.get('bundle_id');
+  const webinar_id = queryParams.get('webinar_id');
+  const main_category_id = queryParams.get('main_category_id');
+  const sub_category_id = queryParams.get('sub_category_id');
 
   const navigate = useNavigate();
 
@@ -107,9 +114,13 @@ function RegistrationScreen() {
       mobile: `${countryPrefix}${mobile}`,
       country_code: countryPrefix,
       type,
-      webinar_id: webinarId,
-      bundle_id: bundleId,
+      webinar_id: webinar_id,
+      bundle_id: bundle_id,
+      main_category_id: main_category_id,
+      sub_category_id: sub_category_id,
     };
+
+    console.log(registrationData);    
 
     try {
       const response = await axios.post(
