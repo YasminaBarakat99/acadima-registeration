@@ -1,21 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
 import "../Styles/Registration/LoginScreen.css";
-// import { UserContext } from "../Context/UserContext";
 import { getPreviousRoute } from "../Context/RouteHistory";
 import { apiUrl } from "../API";
-
-// anasAcadlogo from "../../public/Images/AcadimaLogo.png";
-// import lock from "../../public/Images/Registration/Lock.svg";
-// import mail from "../../public/Images/Registration/Mail.svg";
-// import hide from "../../public/Images/Registration/Hide.svg";
-// import show from "../../public/Images/Registration/Show.svg";
-
-// import appleLogo from "../Images/Registration/apple.svg";
-// import googleLogo from "../Images/Registration/google.svg";
-// import facebookLogo from "../Images/Registration/fb.svg";
 
 const Popup = ({ message, onClose }) => (
   <div className="popup-container">
@@ -60,7 +48,6 @@ const ForgotPasswordPopup = ({ onClose, onSend }) => {
 };
 
 function LoginScreen() {
-  // const { refreshUserData } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -68,17 +55,12 @@ function LoginScreen() {
   const [error, setError] = useState(null);
   const [showForgotPasswordPopup, setShowForgotPasswordPopup] = useState(false); // New state for popup
   const navigate = useNavigate();
-
-  // Get the previous route from location state
   const previousRoute = getPreviousRoute();
-  
 
-  // Toggle password visibility
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
-  // Handle login submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -139,76 +121,7 @@ function LoginScreen() {
     }
   };
 
-  // const handleGoogleLogin = async () => {
-  //   try {
-  //     // Call your backend's endpoint to initiate the Google OAuth process
-  //     const response = await fetch(`${apiUrl}/google`, {
-  //       method: "GET",
-  //       headers: {
-  //         "x-api-key": "1234", // Custom header if required
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       if (data.redirect_url) {
-  //         // Open the Google OAuth URL in a new tab
-  //         window.open(data.redirect_url, "_blank");
-  //       } else {
-  //         setError("Failed to get the Google login redirect URL.");
-  //       }
-  //     } else {
-  //       console.error("Error initiating Google login:", response.statusText);
-  //       setError("An error occurred while initiating Google login.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error during Google login:", error);
-  //     setError("An unknown error occurred.");
-  //   }
-  // };
-  
-
-  // const handleGoogleCallback = async (authCode) => {
-  //   try {
-  //     const response = await fetch(`${apiUrl}/google/callback`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         code: authCode, // Pass the authorization code to the backend
-  //       }),
-  //     });
-  
-  //     const data = await response.json();
-  
-  //     if (response.ok && data.success) {
-  //       const token = data?.data?.token;
-  //       localStorage.setItem("token", token); // Save token in local storage
-  //       // refreshUserData(); // Refresh user data
-  //       navigate("/"); // Redirect to the homepage or a specific route
-  //     } else {
-  //       setError(data.message || "Failed to authenticate using Google.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error in Google callback:", error);
-  //     setError("An unknown error occurred.");
-  //   }
-  // };
-  
-  // // Extract the Google auth code from the URL when the component mounts
-  // useEffect(() => {
-  //   const queryParams = new URLSearchParams(window.location.search);
-  //   const authCode = queryParams.get("code");
-  
-  //   if (authCode) {
-  //     handleGoogleCallback(authCode); // Send the code to the backend
-  //   }
-  // }, []);
-  
-  
-  
+    
   return (
     <div className="mainContainer">
       <div className="formContainer">
@@ -265,47 +178,17 @@ function LoginScreen() {
 
         {/* Social Login */}
         <div className="social-login">
-          {/* <div className="social-login-divider">
-            <span className="line"></span>
-            <span className="text" style={{ color: "white" }}>
-              سجل الدخول عبر
-            </span>
-            <span className="line"></span>
-          </div>
-          <div className="social-icons">
-            <a href="">
-              <img src={appleLogo} alt="Apple Login" />
-            </a>
-            <a onClick={handleGoogleLogin}>
-              <img src={googleLogo} alt="Google Login" />
-            </a>
-            <a href="">
-              <img src={facebookLogo} alt="Facebook Login" />
-            </a>
-          </div> */}
           <p className="register-link">
             <span style={{ color: "white"}}>Don't have an account?</span>{" "}
-            <a onClick={() => navigate("/register")} style={{cursor: "pointer" }}>
+            <a onClick={() => navigate("/react/register")} style={{cursor: "pointer" }}>
               Register 
             </a>
           </p>
         </div>
       </div>
 
-      {/* Support Links */}
-      {/* <div className="post-form">
-        <a href="https://anasacademy.uk/certificate/certificate-check.php" className="post-form-text">
-          التحقق من الشهادات
-        </a>
-        <a href="https://support.anasacademy.uk/" className="post-form-text">
-          فريق الدعم والتواصل
-        </a>
-      </div> */}
-
-      {/* Error Popup */}
       {error && <Popup message={error} onClose={() => setError(null)} />}
 
-      {/* Forgot Password Popup */}
       {showForgotPasswordPopup && (
         <ForgotPasswordPopup
           onClose={() => setShowForgotPasswordPopup(false)}

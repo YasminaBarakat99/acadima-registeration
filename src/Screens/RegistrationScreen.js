@@ -1,27 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-
 import "../Styles/Registration/RegistartionScreen.css";
 import "../Styles/Registration/LoginScreen.css";
-// import { UserContext } from "../Context/UserContext";
 import { getPreviousRoute } from "../Context/RouteHistory";
-
 import { apiUrl, apiUrl2 } from "../API";
 
-// import anasAcadlogo from "../../public/Images/AcadimaLogo.png";
-// import user from "../../public/Images/Registration/User_01.svg";
-// import lock2 from "../../public/Images/Registration/Lock.svg";
-// import mail from "../../public/Images/Registration/Mail.svg";
-// import hide from "../../public/Images/Registration/Hide.svg";
-// import show from "../../public/Images/Registration/Show.svg";
-// import phone from "../../public/Images/Registration/Mobile.svg";
-
-// import appleLogo from "../Images/Registration/apple.svg";
-// import googleLogo from "../Images/Registration/google.svg";
-// import facebookLogo from "../Images/Registration/fb.svg";
-
-// Popup Component
 const Popup = ({ message, onClose }) => (
   <div className="popup-container">
     <div className="popup">
@@ -82,13 +66,11 @@ function RegistrationScreen() {
 
     fetchCountryOptions();
   }, []);
-
-  // Toggle password visibility
+  
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
-  // Validate name (English letters only)
   const handleNameChange = (e) => {
     const value = e.target.value;
     if (!/^[A-Za-z\s]*$/.test(value)) {
@@ -99,7 +81,6 @@ function RegistrationScreen() {
     setName(value);
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -133,7 +114,6 @@ function RegistrationScreen() {
           },
         }
       );
-      // console.log("Response:", response.data);
       
       if (response.data.success === false) {
         if (response.data.data.errors) {
@@ -263,32 +243,13 @@ function RegistrationScreen() {
         </form>
 
         <div className="social-login">
-          {/* <div className="social-login-divider">
-            <span className="line"></span>
-            <span className="text" style={{ color: "white" }}>
-              أو أنشئ الحساب عبر
-            </span>
-            <span className="line"></span>
-          </div>
-
-          <div className="social-icons">
-            <a href="">
-              <img src={appleLogo} alt="Apple Login" />
-            </a>
-            <a href="">
-              <img src={googleLogo} alt="Google Login" />
-            </a>
-            <a href="">
-              <img src={facebookLogo} alt="Facebook Login" />
-            </a>
-          </div> */}
           <p
             className="register-link"
             style={{ color: "white", cursor: "pointer" }}
           >
               Already have an account?
             {"   "}
-            <a href="#" onClick={() => navigate("/login")}>
+            <a onClick={() => navigate("/react/login")} style={{cursor: "pointer" }}>
               Login
             </a>
           </p>
