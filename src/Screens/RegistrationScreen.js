@@ -120,11 +120,12 @@ function RegistrationScreen() {
       sub_category_id: sub_category_id,
     };
 
-    console.log(registrationData);    
-
+    // console.log(registrationData);    
+    let response;
     try {
-      const response = await axios.post(
-        "https://platform.acadima.tech/auth/register",
+      response = await axios.post(
+        `https://platform.acadima.tech/auth/register?main_category_id=${main_category_id}&sub_category_id=${sub_category_id}&webinar_id=${webinar_id}&bundle_id=${bundle_id}`,
+        // `http://127.0.0.1:8000/auth/register?main_category_id=${main_category_id}&sub_category_id=${sub_category_id}&webinar_id=${webinar_id}&bundle_id=${bundle_id}`,
         registrationData,
         {
           headers: {
@@ -132,8 +133,8 @@ function RegistrationScreen() {
           },
         }
       );
-      console.log("Response:", response.data.data.errors);
-
+      // console.log("Response:", response.data);
+      
       if (response.data.success === false) {
         if (response.data.data.errors) {
           const errorMessages = [];
@@ -153,6 +154,8 @@ function RegistrationScreen() {
       console.error("There was an error!", error.response?.data || error.message);
       setError(error.response?.data?.message || "Registration failed. Please try again.");
     } finally {
+      window.location.href = `https://platform.acadima.tech/new-webinars/${webinar_id}/apply/${response.data.data.user.id}`;
+      // window.location.href = `http://127.0.0.1:8000/new-webinars/${webinar_id}/apply/${response.data.data.user.id}`;
       setLoading(false);
     }
   };
